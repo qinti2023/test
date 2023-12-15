@@ -23,7 +23,7 @@ incidents[200:205, c("INCIDENT_ID", "INCIDENT_DATE", "WEAPONS")]
 length(unique(incidents$INCIDENT_ID))
 length(unique(incidents$INCIDENT_ID)) == length(unique(persons$INCIDENT_ID))
 # 1g. (3 points)
-
+names(tail(sort(table(incidents$OFFENSE)), 10))
 # 1h. (3 points)
 
 # 1i. (3 points)
