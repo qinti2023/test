@@ -93,21 +93,39 @@ max_clearance_time("ARSON")
 ### 4. Maps
 
 # 4a. (2 points)
-
+cpd_sf <- cpd[!is.na(cpd$LONGITUDE) & !is.na(cpd$LATITUDE), ]
 # 4b. (4 points)
-
+cpd_sf <- st_as_sf(cpd_sf, coords = c("LONGITUDE", "LATITUDE"), crs = 4326)
+cpd_sf <- st_transform(cpd_sf,crs = st_crs(districts_sf))
 # 4c. (4 points)
-
+plot(st_geometry(districts_sf))
+plot(st_geometry(districts_sf[districts_sf$DISTRICT == 2,]), col = "lightblue", add = TRUE)
+plot(st_geometry(districts_sf[districts_sf$DISTRICT == 2,]), border = "red", add = TRUE)
 # 4d. (4 points)
-
+cpd_sf <- st_join(cpd_sf, districts_sf[, "DISTRICT"])
 # 4e. (3 points)
-
+abductions_sf <- cpd_sf[cpd_sf$OFFENSE == "ABDUCTION", ]
 # 4f. (4 points)
+table(abductions_sf$DISTRICT)
+plot(st_geometry(districts_sf), col = "grey")
+plot(st_geometry(abductions_sf), col = "red", add = TRUE,pch = 20, cex = 0.8)
+plot(st_geometry(districts_sf[districts_sf$DISTRICT == 1,]), col = "lightgreen", add = TRUE)
+
 
 # 4g. (4 points)
-
+centroids <- st_centroid(districts_sf)
+coords <- st_coordinates(centroids)
+text(coords, labels = districts_sf$DISTRICT)
 # 4h. (4 points)
+plot(st_geometry(districts_sf), col = "grey")
+plot(st_geometry(cpd_sf), col = "blue", add = TRUE)
+assault_sf <- cpd_sf[cpd_sf$ASSAULT_ANY == 1, ]
+plot(st_geometry(assault_sf), col = "red", add = TRUE)
 
 # 4i. (4 points)
-
+nAssault <- tapply(cpd_sf$ASSAULT_ANY, cpd_sf$DISTRICT, sum, na.rm = TRUE)
+districts_sf$nAssault <- nAssault[as.character(districts_sf$DISTRICT)]
 # 4j. (5 points)
+districts_sf$nAssault_cats <- cut(districts_sf$nAssault, breaks = c(-Inf, quantile(districts_sf$nAssault, probs = 0:4/4, na.rm = TRUE)), include.lowest = TRUE, labels = FALSE)
+plot(st_geometry(districts_sf), col = heat.colors(4)[districts_sf$nAssault_cats], border = "black")
+text(coords, labels = districts_sf$DISTRICT)
