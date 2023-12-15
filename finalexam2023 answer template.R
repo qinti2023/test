@@ -15,7 +15,7 @@ dim(incidents)
 head(incidents,7)
 tail(persons,7)
 # 1d. (2 points)
-
+incidents[26650,c("OFFENSE","BEAT")]
 # 1e. (2 points)
 
 # 1f. (3 points)
