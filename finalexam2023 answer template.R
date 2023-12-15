@@ -33,16 +33,22 @@ names(which.max(table(incidents$BEAT)))
 ### 2. Create a New Dataset, Fix Data Errors, and Wrangle the Data
 
 # 2a. (4 points)
-
+cpd = merge(incidents,persons,by = "INCIDENT_ID")
 # 2b. (3 points)
-
+cpd[cpd$OFFENSE == "WIRE FRAUD",c("VICTIM_RACE", "VICTIM_ETHNICITY", "VICTIM_GENDER", "VICTIM_AGE")]
 # 2c. (3 points)
-
+unique(cpd$VICTIM_GENDER)
+table(!cpd$VICTIM_GENDER %in% c( "FEMALE","MALE", "M - MALE","F - FEMALE"))
 # 2d. (3 points)
-
+cpd$VICTIM_GENDER = gsub("F - FEMALE","FEMALE",cpd$VICTIM_GENDER)
+cpd$VICTIM_GENDER = gsub("M - MALE","FEMALE",cpd$VICTIM_GENDER)
+cpd$VICTIM_GENDER[!cpd$VICTIM_GENDER %in% c("MALE", "FEMALE")] <- "UNKNOWN"
+table(cpd$VICTIM_GENDER)
 # 2e. (4 points)
-
+cpd$WEAPONS_CODE <- gsub("^(\\d{2,3}).*$", "\\1", cpd$WEAPONS)
 # 2f. (4 points)
+cpd$ASSAULT_ANY <- ifelse(grepl("assault", tolower(cpd$OFFENSE), fixed = TRUE), 1, 0)
+mean(cpd$ASSAULT_ANY) * 100
 
 
 ### 3. Working with Dates and Times
