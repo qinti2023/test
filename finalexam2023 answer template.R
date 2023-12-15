@@ -54,18 +54,40 @@ mean(cpd$ASSAULT_ANY) * 100
 ### 3. Working with Dates and Times
 
 # 3a. (2 points)
-
+cpd$INCIDENT_DATE <- mdy(cpd$INCIDENT_DATE)
+cpd$CLEARANCE_DATE <- mdy(cpd$CLEARANCE_DATE)
 # 3b. (4 points)
-
+cpd$TIME_TO_CLEAR <- as.numeric(cpd$CLEARANCE_DATE - cpd$INCIDENT_DATE)
+mean_time_to_clear <- aggregate(TIME_TO_CLEAR ~ BEAT, data = cpd, mean, na.rm = TRUE)
+mean_time_to_clear[which.max(mean_time_to_clear$TIME_TO_CLEAR), ]
 # 3c. (3 points)
-
+cpd[which.max(cpd$TIME_TO_CLEAR), c("INCIDENT_ID", "TIME_TO_CLEAR")]
 # 3d. (5 points) 
+cpd$TIME_TO_CLEAR_CATS <- cut(cpd$TIME_TO_CLEAR,
+                              breaks = c(0, 364, 729, Inf),
+                              labels = c("0 years", "1 year", "2+ years"),
+                              right = FALSE)
 
 # 3e. (6 points)
-
+offense_stats = aggregate(TIME_TO_CLEAR ~ OFFENSE, data = cpd, function(x) {
+  c(mean = round(mean(x, na.rm = TRUE), 1),
+    median = median(x, na.rm = TRUE),
+    count = length(na.omit(x)))
+})
+offense_stats
 # 3f. (4 points)
-
+cpd$DAY_OF_WEEK <- weekdays(cpd$INCIDENT_DATE)
+library(ggplot2)
+ggplot(cpd, aes(DAY_OF_WEEK)) +
+  geom_bar() +
+  xlab("Day of the Week") +
+  ylab("Count of Crime Incidents") +
+  ggtitle("Total Count of Crime Incidents by Day of the Week")
 # 3g. (4 points)
+max_clearance_time <- function(offense) {
+  max(cpd$TIME_TO_CLEAR[cpd$OFFENSE == offense], na.rm = TRUE)
+}
+max_clearance_time("ARSON")
 
 
 ### 4. Maps
