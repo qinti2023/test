@@ -27,8 +27,8 @@ names(tail(sort(table(incidents$OFFENSE)), 10))
 # 1h. (3 points)
 names(table(incidents$OFFENSE)[table(incidents$OFFENSE)==1])
 # 1i. (3 points)
+table(incidents$BEAT)
 names(which.max(table(incidents$BEAT)))
-max(table(incidents$BEAT))
 
 ### 2. Create a New Dataset, Fix Data Errors, and Wrangle the Data
 
