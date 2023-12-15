@@ -38,7 +38,7 @@ cpd = merge(incidents,persons,by = "INCIDENT_ID")
 cpd[cpd$OFFENSE == "WIRE FRAUD",c("VICTIM_RACE", "VICTIM_ETHNICITY", "VICTIM_GENDER", "VICTIM_AGE")]
 # 2c. (3 points)
 unique(cpd$VICTIM_GENDER)
-table(!cpd$VICTIM_GENDER %in% c( "FEMALE","MALE", "M - MALE","F - FEMALE"))
+sum(!cpd$VICTIM_GENDER %in% c( "FEMALE","MALE", "M - MALE","F - FEMALE"))
 # 2d. (3 points)
 cpd$VICTIM_GENDER = gsub("F - FEMALE","FEMALE",cpd$VICTIM_GENDER)
 cpd$VICTIM_GENDER = gsub("M - MALE","FEMALE",cpd$VICTIM_GENDER)
