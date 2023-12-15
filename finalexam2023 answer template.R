@@ -19,7 +19,8 @@ incidents[26650,c("OFFENSE","BEAT")]
 # 1e. (2 points)
 incidents[200:205, c("INCIDENT_ID", "INCIDENT_DATE", "WEAPONS")]
 # 1f. (3 points)
-
+length(unique(incidents$INCIDENT_ID))
+length(unique(incidents$INCIDENT_ID)) == length(unique(persons$INCIDENT_ID))
 # 1g. (3 points)
 
 # 1h. (3 points)
