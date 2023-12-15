@@ -10,7 +10,7 @@ library(sf)
 library(dplyr)
 load("./finaldata2023.RData")
 # 1b. (2 points)
-
+dim(incidents)
 # 1c. (2 points)
 
 # 1d. (2 points)
