@@ -5,7 +5,10 @@
 ### 1. Setup the data, load the libraries, and inspect the data
 
 # 1a. (2 points)
+library(lubridate)
 library(sf)
+library(dplyr)
+load("./finaldata2023.RData")
 # 1b. (2 points)
 
 # 1c. (2 points)
