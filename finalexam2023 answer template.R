@@ -15,6 +15,7 @@ dim(incidents)
 head(incidents,7)
 tail(persons,7)
 # 1d. (2 points)
+incidents[26650,]
 incidents[26650,c("OFFENSE","BEAT")]
 # 1e. (2 points)
 incidents[200:205, c("INCIDENT_ID", "INCIDENT_DATE", "WEAPONS")]
